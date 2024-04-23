@@ -3,7 +3,7 @@ import csv
 from keys import api_key
 
 def fetch_movie_data(imdb_id):
-    url = f"http://www.omdbapi.com/?i={imdb_id}&apikey={api_key}"
+    url = f"http://www.omdbapi.com/?apikey={api_key}&i={imdb_id}"
     response = requests.get(url)
     
     if response.status_code == 200:
