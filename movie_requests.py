@@ -1,5 +1,6 @@
 import requests
 import csv
+import re
 from keys import api_key
 
 def fetch_movie_data(imdb_id):
@@ -11,34 +12,32 @@ def fetch_movie_data(imdb_id):
         return movie_data
     else:
         print(f"Failed to fetch data for IMDb ID '{imdb_id}'. Status code: {response.status_code}")
-        return
+        return None
 
-def save_movie_data(movie_data_list):
-    with open('movies.csv', 'w', newline='') as csvfile:
-        fieldnames = ['Movie Title', 'Runtime', 'Genre', 'Award Wins', 'Award Nominations', 'Box Office']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+def save_movie_data(movie_data):
+    try:
+        title = movie_data.get('Title', 'N/A')
+        runtime = int(movie_data.get('Runtime', '0').split(' ')[0])
+        genre = movie_data.get('Genre', 'N/A')
+        awards = movie_data.get('Awards', 'N/A')
         
-        writer.writeheader()
-        for movie_data in movie_data_list:
-            award_wins = 0
-            award_nominations = 0
-            
-            if 'Awards' in movie_data and movie_data['Awards'] != 'N/A':
-                awards = movie_data['Awards'].split(' ')
-                award_wins = int(awards[0]) if awards[0].isdigit() else 0
-                award_nominations = int(awards[2]) if len(awards) > 2 and awards[2].isdigit() else 0
+        wins = sum(map(int, re.findall(r'(\d+) win', awards)))
+        nominations = sum(map(int, re.findall(r'(\d+) nomination', awards)))
 
-            writer.writerow({
-                'Movie Title': movie_data.get('Title', ''),
-                'Runtime': movie_data.get('Runtime', '').split(' ')[0],
-                'Genre': movie_data.get('Genre', ''),
-                'Award Wins': award_wins,
-                'Award Nominations': award_nominations,
-                'Box Office': movie_data.get('BoxOffice', '').replace('$', '').replace(',', '') if movie_data.get('BoxOffice') != 'N/A' else ''
-            })
+        box_office = int(movie_data.get('BoxOffice', '$0').replace('$', '').replace(',', ''))
+        
+        with open('movies.csv', 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([title, runtime, genre, wins, nominations, box_office])
+        
+    except ValueError:
+        print(f"Error processing movie: {movie_data.get('Title', 'Unknown')}")
 
 def main():
-    movie_data_list = []
+    with open('movies.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Movie Title', 'Runtime', 'Genre', 'Award Wins', 'Award Nominations', 'Box Office'])
+    
     with open('oscar_winners.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)
@@ -46,9 +45,8 @@ def main():
             imdb_id = row[1]
             movie_data = fetch_movie_data(imdb_id)
             if movie_data:
-                movie_data_list.append(movie_data)
+                save_movie_data(movie_data)
 
-    save_movie_data(movie_data_list)
     print("Data saved to movies.csv")
 
 if __name__ == "__main__":

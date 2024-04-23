@@ -1,11 +1,16 @@
 Movie Title,Runtime,Genre,Award Wins,Award Nominations,Box Office
-Parasite,132,"Drama, Thriller",0,0,53369749
-Green Book,130,"Biography, Comedy, Drama",0,0,85080171
-The Shape of Water,123,"Drama, Fantasy, Romance",0,0,63859435
-Moonlight,111,Drama,0,0,27854932
-Spotlight,129,"Biography, Crime, Drama",0,0,45055776
-Birdman or (The Unexpected Virtue of Ignorance),119,"Comedy, Drama",0,0,42340598
-12 Years a Slave,134,"Biography, Drama, History",0,0,56671993
-Argo,120,"Biography, Drama, Thriller",0,0,136025503
-The Artist,100,"Comedy, Drama, Romance",0,0,44671682
-The King's Speech,118,"Biography, Drama, History",0,0,138797449
+Parasite,132,"Drama, Thriller",309,265,53369749
+Green Book,130,"Biography, Comedy, Drama",58,123,85080171
+The Shape of Water,123,"Drama, Fantasy, Romance",136,350,63859435
+Moonlight,111,Drama,233,309,27854932
+Spotlight,129,"Biography, Crime, Drama",124,144,45055776
+Birdman or (The Unexpected Virtue of Ignorance),119,"Comedy, Drama",192,294,42340598
+12 Years a Slave,134,"Biography, Drama, History",244,337,56671993
+Argo,120,"Biography, Drama, Thriller",96,156,136025503
+The Artist,100,"Comedy, Drama, Romance",162,204,44671682
+The King's Speech,118,"Biography, Drama, History",108,206,138797449
+The Shawshank Redemption,142,Drama,21,42,28767189
+The Godfather,175,"Crime, Drama",31,31,136381073
+The Dark Knight,152,"Action, Crime, Drama",163,164,534987076
+Pulp Fiction,154,"Crime, Drama",69,72,107928762
+Forrest Gump,142,"Drama, Romance",51,74,330455270
