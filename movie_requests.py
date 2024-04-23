@@ -20,6 +20,9 @@ def save_movie_data(movie_data):
         runtime = int(movie_data.get('Runtime', '0').split(' ')[0])
         genre = movie_data.get('Genre', 'N/A')
         awards = movie_data.get('Awards', 'N/A')
+        rated = movie_data.get('Rated', 'N/A')
+        director = movie_data.get('Director', 'N/A')
+        released = movie_data.get('Released', 'N/A')
         
         wins = sum(map(int, re.findall(r'(\d+) win', awards)))
         nominations = sum(map(int, re.findall(r'(\d+) nomination', awards)))
@@ -28,7 +31,7 @@ def save_movie_data(movie_data):
         
         with open('movies.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([title, runtime, genre, wins, nominations, box_office])
+            writer.writerow([title, runtime, genre, wins, nominations, box_office, rated, director, released])
         
     except ValueError:
         print(f"Error processing movie: {movie_data.get('Title', 'Unknown')}")
@@ -36,7 +39,7 @@ def save_movie_data(movie_data):
 def main():
     with open('movies.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Movie Title', 'Runtime', 'Genre', 'Award Wins', 'Award Nominations', 'Box Office'])
+        writer.writerow(['Movie Title', 'Runtime', 'Genre', 'Award Wins', 'Award Nominations', 'Box Office', 'Rated', 'Director', 'Released'])
     
     with open('oscar_winners.csv', newline='') as csvfile:
         reader = csv.reader(csvfile)
